@@ -73,7 +73,28 @@ def tinyMazeSearch(problem):
     return  [s, s, w, s, w, w, s, w]
 
 def depthFirstSearch(problem: SearchProblem):
+    stack = util.Stack()
+    visited = []
+    goal_found = False
+    stack.push([problem.getStartState(),[]])
+    while goal_found == False:
+        node = stack.pop()
+        if problem.isGoalState(node[0]):
+            goal_found = True
+        visited.append(node[0])
+
+        for x in problem.getSuccessors(node[0]):
+            test = False
+            for y in visited:
+                if y == x[0]:
+                    test = True
+            if test == False:
+                stack.push([x[0], node[1] + [x[1]]])
+    return node[1]
+
+
     """
+    
     Search the deepest nodes in the search tree first.
 
     Your search algorithm needs to return a list of actions that reaches the
@@ -91,6 +112,24 @@ def depthFirstSearch(problem: SearchProblem):
 def breadthFirstSearch(problem: SearchProblem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
+    stack = util.Queue()
+    visited = []
+    goal_found = False
+    stack.push([problem.getStartState(),[]])
+    while goal_found == False:
+        node = stack.pop()
+        if problem.isGoalState(node[0]):
+            goal_found = True
+        visited.append(node[0])
+
+        for x in problem.getSuccessors(node[0]):
+            test = False
+            for y in visited:
+                if y == x[0]:
+                    test = True
+            if test == False:
+                stack.push([x[0], node[1] + [x[1]]])
+    return node[1]
     util.raiseNotDefined()
 
 def uniformCostSearch(problem: SearchProblem):
